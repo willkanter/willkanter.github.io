@@ -1,13 +1,17 @@
 <html>
+  <html lang="en">
   <head>
     <title>About Me</title>
   </head>
+  <meta charset="utf-8"/>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="scripts/my_script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
     <ul class="navbar-nav">
       <li class="nav-item active">
@@ -57,6 +61,26 @@
       border-bottom-right-radius: 50% 50%;
       border-bottom-left-radius: 50% 50%;
     }
+    .btn-sm{
+      margin-right: 0;
+      margin-top: 0;
+      align-self: baseline;
+      max-width: 31px;
+    }
+    .fa {
+      padding: 20px;
+      font-size: 30px;
+      width: 50px;
+      text-align: left;
+      text-decoration: none;
+    }
+    .buttonBoy{
+      padding: 20px;
+      font-size: 30px;
+      width: 50px;
+      text-align: right;
+      text-decoration: none;
+    }
   </style>
 
   <body>
@@ -99,23 +123,26 @@
             <td>python</td>
           </tr>
       </table>
-      <div class="card" style="width:400px">
+      <div class="card" style="width:400px" id="interest1">
         <img class="card-img-top" src="img/camera.jpg" alt="camera picture">
+        <a href = "#" class = "fa fa-twitter" onclick = "addCard(interest1)"></a>
         <div class="card-body">
           <h4 class="card-title">Photography</h4>
           <p class="card-text">I really enjoy astrophotography and taking pictures while climbing</p>
         </div>
       </div>
-      <div class="card" style="width:400px">
+      <div class="card" style="width:400px" id="interest2">
         <img class="card-img-top" src="img/mtb.jpg" alt="me on a bike">
+        <a href = "#" class = "fa fa-twitter" onclick = "addCard(interest2)" align = "left"></a>
         <div class="card-body">
           <h4 class="card-title">Mountain Biking</h4>
           <p class="card-text">Boulder has been an amazing place to mountain bike these last two years, I especially love Hall Ranch</p>
           <a href="https://www.strava.com/athletes/27056810" class="btn btn-warning">See Strava</a>
         </div>
       </div>
-      <div class="card" style="width:400px">
+      <div class="card" style="width:400px" id="interest3">
         <img class="card-img-top" src="img/kelso.jpg" alt="me on kelso ridge">
+        <a href = "#" class = "fa fa-twitter" onclick = "addCard(interest3)"></a>
         <div class="card-body">
           <h4 class="card-title">Mountaineering</h4>
           <p class="card-text">There has been nothing I've loved more than scrambling up mountains, the freedom of no ropes and the fun of climbing make it a great experience</p>

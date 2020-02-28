@@ -1,7 +1,7 @@
 /*
 [IMPORTANT]
 You are free to create any number of helper function you want.
-We know the problem could be seached online, and we are aware of those solutions. 
+We know the problem could be seached online, and we are aware of those solutions.
 So please sight sources if you took help from any online resource.
 */
 
@@ -11,9 +11,9 @@ So please sight sources if you took help from any online resource.
 var table_ids = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
 
 /*
-An integer array of length 9. 
+An integer array of length 9.
 Usaged: This is to store the state to the tictactoe board.
-When a move is made 
+When a move is made
 (Example player 1 (who is X) move at Cell 'A1' --- The board_state[0] will be made 1 )
 Similarly, A move by player 2(who is O) at Cell 'A3' --- The board_state[2] will be made 0 )
 We store the move of player 1 as '1' and player 2 as '0'. So after the above two moves the state should look like
@@ -25,12 +25,17 @@ var board_state = [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 // A flag to keep track of the status of the game, false means the game is not started. The default value is set to false
 var started = false
 
-/* 
+/*
 A variable to keep track of each players turn. Since the game always starts with player 1 - The default value is set to '1'
 1 means player_1
 0 means player_0
 */
-var turn = 1 
+var turn = 1
+
+function emptyTheNames(){
+	document.getElementById("player1_id").value = "";
+	document.getElementById("player2_id").value = "";
+}
 
 /*
  @Return boolean
@@ -42,8 +47,8 @@ function isEmpty(_str) {
 }
 
 /*
-@Return int This return the turn variable. Please note that 
-turn = 1 is for player_1 and 
+@Return int This return the turn variable. Please note that
+turn = 1 is for player_1 and
 turn = 0 is for player_2
 @Param - No param
 */
@@ -53,7 +58,7 @@ function whose_move(){
 
 /*
 @Return void
-@Param 
+@Param
 This methods toggles the 'turn' variable.
 if the turn is set to 1 it will make it 0
 if the turn is set to 0 it will make it 1
@@ -64,7 +69,7 @@ function toggle_move() {
 
 /*
 @Return boolean
-@Param 
+@Param
 The method returns the value of the 'started' flag.
 true means the game has started
 false means the game has not started
@@ -87,7 +92,25 @@ The method should do all the validations as stated in rule 1.
 5. Once game has started, Handle multiple clicks on begin play.
 */
 
+var turnCount = 0;
+
 function begin_play(){
+	if(game_started()){
+		window.alert("Game has already begun :(");
+		return false;
+	}
+	if(!isEmpty(document.getElementById("player1_id").value) && !isEmpty(document.getElementById("player2_id").value)){
+		document.getElementById("player1_id").value += " (X)"
+		document.getElementById("player2_id").value += " (O)"
+		document.getElementById("player1_id").disabled = true;
+		document.getElementById("player2_id").disabled = true;
+		document.getElementById("turn_info").innerHTML = "Play begins with (X)"
+		started = true;
+	}
+	else{
+		window.alert("Please enter a name for each player.")
+		return false;
+	}
 
 }
 
@@ -102,8 +125,28 @@ The method should do all the things as stated in rule 2.
 Remember to set the strated flag as false
 
 */
-function reset_play(){
+function reset_board(){
+	for(var i = 0; i<table_ids.length; i++){
+		document.getElementById(table_ids[i]).innerHTML = table_ids[i];
+		board_state[i] = -1;
+	}
+}
 
+function reset_play(){
+	if(!game_started){
+		window.alert("You have to start a game to restart it.");
+	}
+	else{
+		document.getElementById("player1_id").value = "";
+		document.getElementById("player2_id").value = "";
+		document.getElementById("player1_id").disabled = false;
+		document.getElementById("player2_id").disabled = false;
+		started = false;
+		turn = 1;
+		turnCount = 0;
+		document.getElementById("turn_info").innerHTML = "Game has not begun."
+		reset_board();
+	}
 }
 
 /*
@@ -116,23 +159,225 @@ The method should do all the things as stated in rule 2.
 	Hint: Use the turn variable to figure out who is currently playing. Use to toggle method to change moves.
 4. A move should always be a valid move. (Example: If say a move was made in already filled cell, it should be invalidated with an alert.)
 5. If the game has not started, clicking on <b>Play</b> should give an alert "The game has not started."<br/>
-6. After any move, the state of the table should be validated.(see the document attached in the homework) 
+6. After any move, the state of the table should be validated.(see the document attached in the homework)
    If the there is winner - Show it in an alert message - (Ex - Winner is X or O) - Displaying name is not important. <br/>
 7. The game should reset itself once a winner is determined.<br/>
 8. After all the moves have exhausted, you're not required to display any message. (It should be obvious to Reset play.)<br/>
 
 */
+function stylizedCheckBoard(){
+	let x = [0, 3, 6, 0, 1, 2, 0, 2] // ayyyyy look at that matrix transformation
+	let y = [1, 4, 7, 3, 4, 5, 4, 4]
+	let z = [2, 5, 8, 6, 7, 8, 8, 6]
+	for(var i = 0; i < x.length; i++){
+		console.log(board_state[x[i]]);
+		console.log(board_state[y[i]]);
+		console.log(board_state[z[i]]);
+		console.log("this is the " + i + "th itheration");
+		if(board_state[x[i]] == board_state[y[i]] && board_state[y[i]] == board_state[z[i]]){
+			if(board_state[x[i]] == -1){
+				console.log(i + " was cleared");
+				continue;
+			}
+			if(board_state[y[i]] == -1){
+				console.log(i + " was cleared");
+				continue;
+			}
+			if(board_state[z[i]] == -1){
+				console.log(i + " was cleared");
+				continue;
+			}
+
+			if(turn == 0){
+				window.alert("Winner is O");
+				reset_play();
+				return;
+			}else{
+				window.alert("Winner is X");
+				reset_play();
+				return;
+			}
+		}
+	}
+}
+
+
+
 function play() {
-	
+	var finder = false;
+	var square = document.getElementById("move_text_id").value;
+	document.getElementById("move_text_id").value = "";
+	var i = 0;
+	for(i = 0; i < table_ids.length; i++){
+		if(square == table_ids[i]){
+			finder = true;
+			break; // break
+		}
+	}
+	if(finder == true){
+		if(document.getElementById(table_ids[i]).innerHTML == "X" || document.getElementById(table_ids[i]).innerHTML == "O"){
+			window.alert("Invalid square. We're case sensitive here, thank you.");
+			return false;
+		}
+		document.getElementById(table_ids[i]).innerHTML = "";
+		if(turn == 1){
+			document.getElementById(table_ids[i]).innerHTML = "X";
+			board_state[i] = 1;
+			turnCount++;
+		}
+		else if(turn == 0){
+			document.getElementById(table_ids[i]).innerHTML = "O";
+			board_state[i] = 0;
+			turnCount++;
+		}
+
+	}else{
+		window.alert("Invalid square. We're case sensitive here, thank you.");
+		return false;
+	}
+	if(turnCount==9){
+		window.alert("DRAW!");
+		reset_play();
+		return false;
+	}
+	stylizedCheckBoard();
+	if(turn==1){
+		turn = 0;
+		let s = "O";
+		document.getElementById("turn_info").innerHTML = "Turn for: " + s.bold();
+		return;
+	}
+	else{
+		turn = 1;
+		let s = document.getElementById("player1_id").value;
+		document.getElementById("turn_info").innerHTML = "Turn for: " + s.bold();
+		return;
+	}
+
 }
 
 /*
 Do not change this method.
 */
-function moveEnter(event) {		
+function moveEnter(event) {
 	if(event.keyCode == 13) {
 		event.preventDefault()
 		play()
 	}
 
 }
+
+// function checkBoard(){
+// 	if(board_state[0] == board_state[1] == board_state[2]){
+// 		if(board_state[0] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[3] == board_state[4] == board_state[5]){
+// 		if(board_state[3] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[6] == board_state[7] == board_state[8]){
+// 		if(board_state[6] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[0] == board_state[3] == board_state[6]){
+// 		if(board_state[0] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[1] == board_state[4] == board_state[7]){
+// 		if(board_state[1] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[2] == board_state[5] == board_state[8]){
+// 		if(board_state[2] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[0] == board_state[4] == board_state[8]){
+// 		if(board_state[0] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// 	else if(board_state[2] == board_state[4] == board_state[6]){
+// 		if(board_state[2] == -1){
+// 			return false;
+// 		}
+// 		if(turn == 0){
+// 			window.alert("Winner is O");
+// 			reset_play();
+// 			return true;
+// 		}else{
+// 			window.alert("Winner is X");
+// 			reset_play();
+// 			return true;
+// 		}
+// 	}
+// }
