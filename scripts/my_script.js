@@ -11,6 +11,5 @@ function addCard(cardName){
 function deleteCard(cardID){
   console.log(cardID);
   //var x = document.getElementById(cardID);
-  cardID.remove()
-  console.log(x);
+  cardID.remove();
 }
