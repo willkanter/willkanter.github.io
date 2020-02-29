@@ -32,7 +32,7 @@ A variable to keep track of each players turn. Since the game always starts with
 */
 var turn = 1
 
-function emptyTheNames(){
+function emptyTheNames(){ // just some script to empty the name spaces on refreshes
 	document.getElementById("player1_id").value = "";
 	document.getElementById("player2_id").value = "";
 }
@@ -52,7 +52,7 @@ turn = 1 is for player_1 and
 turn = 0 is for player_2
 @Param - No param
 */
-function whose_move(){
+function whose_move(){ // I didn't see this until now, neat. Never used.
 	return this.turn
 }
 
@@ -63,7 +63,7 @@ This methods toggles the 'turn' variable.
 if the turn is set to 1 it will make it 0
 if the turn is set to 0 it will make it 1
 */
-function toggle_move() {
+function toggle_move() { // did it manually
 	this.turn = !this.turn
 }
 
@@ -100,9 +100,9 @@ function begin_play(){
 		return false;
 	}
 	if(!isEmpty(document.getElementById("player1_id").value) && !isEmpty(document.getElementById("player2_id").value)){
-		document.getElementById("player1_id").value += " (X)"
-		document.getElementById("player2_id").value += " (O)"
-		document.getElementById("player1_id").disabled = true;
+		document.getElementById("player1_id").value += " (X)" // add X to player one
+		document.getElementById("player2_id").value += " (O)" // add O to player two
+		document.getElementById("player1_id").disabled = true; // disable the name box
 		document.getElementById("player2_id").disabled = true;
 		document.getElementById("turn_info").innerHTML = "Play begins with (X)"
 		started = true;
@@ -126,13 +126,13 @@ Remember to set the strated flag as false
 
 */
 function reset_board(){
-	for(var i = 0; i<table_ids.length; i++){
+	for(var i = 0; i<table_ids.length; i++){ // sets the board to all -1
 		document.getElementById(table_ids[i]).innerHTML = table_ids[i];
 		board_state[i] = -1;
 	}
 }
 
-function reset_play(){
+function reset_play(){ // Sets everything back to the initial state
 	if(!game_started){
 		window.alert("You have to start a game to restart it.");
 	}
@@ -216,7 +216,7 @@ function play() {
 	}
 	if(finder == true){
 		if(document.getElementById(table_ids[i]).innerHTML == "X" || document.getElementById(table_ids[i]).innerHTML == "O"){
-			window.alert("Invalid square. We're case sensitive here, thank you.");
+			window.alert("Invalid square. The other player beat you to it.");
 			return false;
 		}
 		document.getElementById(table_ids[i]).innerHTML = "";
@@ -264,8 +264,9 @@ function moveEnter(event) {
 		event.preventDefault()
 		play()
 	}
-
 }
+
+/* I'm keeping this to remind myself how good I am for turning this into 34 lines from 115 lines */
 
 // function checkBoard(){
 // 	if(board_state[0] == board_state[1] == board_state[2]){
